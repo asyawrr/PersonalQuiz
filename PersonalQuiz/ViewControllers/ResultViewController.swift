@@ -9,18 +9,11 @@ import UIKit
 
 class ResultViewController: UIViewController {
     
-    
-    
     @IBOutlet var typeResultLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     
-    // 1. Передать массив с ответами на экран с результатами
-    // 2. Определить наиболее часто встречающийся тип животного
-    // 3. Отобразить результаты в соотвствии с этим животным
-    // 4. Избавиться от кнопки возврата назад на экране результатов
-    
     var answers: [Answer]!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,7 +24,7 @@ class ResultViewController: UIViewController {
         navigationItem.hidesBackButton = true
         print(animalResult)
     }
- 
+    
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         dismiss(animated: true)
         
@@ -45,12 +38,9 @@ class ResultViewController: UIViewController {
             animalAnswerCounts[animalType] = (animalAnswerCounts[animalType] ?? 0) + 1
         }
         
-        let mostCommonAnimal = animalAnswerCounts.sorted { $0.1 < $1.1 }.first!.key
-
+        let mostCommonAnimal = animalAnswerCounts.sorted { $0.1 > $1.1 }.first!.key
+        
         return mostCommonAnimal
         
     }
-    
-    
-    
 }
