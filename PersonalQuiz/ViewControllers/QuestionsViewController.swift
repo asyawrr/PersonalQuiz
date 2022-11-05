@@ -45,7 +45,14 @@ final class QuestionsViewController: UIViewController {
         super.viewDidLoad()
         updateUI()
     }
+    // MARK: - Override functions
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showResult" {
+            guard let resultVC = segue.destination as? ResultViewController else { return }
+            resultVC.answers = answerChosen
+        }
+    }
     // MARK: - IBActions
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         guard let currentIndex = singleButtons.firstIndex(of: sender) else { return }
@@ -72,15 +79,6 @@ final class QuestionsViewController: UIViewController {
         answerChosen.append(currentAnswers[index])
         
         nextQuestion()
-    }
-    
-    // MARK: - Override functions
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showResult" {
-            guard let resultVC = segue.destination as? ResultViewController else { return }
-            resultVC.answers = answerChosen
-        }
     }
 }
 

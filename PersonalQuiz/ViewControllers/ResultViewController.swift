@@ -18,11 +18,8 @@ class ResultViewController: UIViewController {
         super.viewDidLoad()
         
         let animalResult = findFrequentAnimal()
-        typeResultLabel.text = "Да вы же - \(animalResult.rawValue)!"
-        descriptionLabel.text = animalResult.definition
-        
+        updateUI(with: animalResult)
         navigationItem.hidesBackButton = true
-        print(animalResult)
     }
     
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
@@ -33,14 +30,20 @@ class ResultViewController: UIViewController {
     private func findFrequentAnimal() -> AnimalType {
         var animalAnswerCounts: [AnimalType : Int] = [:]
         let animalTypes = answers.map { $0.type }
-        
+
         for animalType in animalTypes {
             animalAnswerCounts[animalType] = (animalAnswerCounts[animalType] ?? 0) + 1
         }
-        
-        let mostCommonAnimal = animalAnswerCounts.sorted { $0.1 > $1.1 }.first!.key
+
+        let mostCommonAnimal = animalAnswerCounts.max { $0.1 < $1.1 }?.key ?? .cat
         
         return mostCommonAnimal
         
+    }
+    
+    private func updateUI(with animal: AnimalType) {
+        typeResultLabel.text = "Да вы же - \(animal.rawValue)!"
+        descriptionLabel.text = animal.definition
+
     }
 }
